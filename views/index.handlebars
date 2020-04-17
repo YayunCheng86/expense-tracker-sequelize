@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="panel" style="margin-left: 18%; width: 70%; margin-bottom: 2%;">
+        <div class="row d-flex flex-column align-items-start">
+
+            <div class="dropdown-pack mt-4 d-flex col-9 ml-4 mb-2">
+                {{!-- dropdown --}}
+                <div class="dropdown col-5 mr-2" style="padding: 0%;">
+                    <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">類別</button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/?category=daily-necessities">日用品</a>
+                        <a class="dropdown-item" href="/?category=transportation">交通</a>
+                        <a class="dropdown-item" href="/?category=food">食物</a>
+                        <a class="dropdown-item" href="/?category=entertainment">娛樂</a>
+                        <a class="dropdown-item" href="/?category=others">其他</a>
+                    </div>
+                </div>
+
+                {{!-- dropdown --}}
+                <div class="dropdown col-5" style="padding: 0%;">
+                    <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">月份</button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/?month=01">1月</a>
+                        <a class="dropdown-item" href="/?month=02">2月</a>
+                        <a class="dropdown-item" href="/?month=03">3月</a>
+                        <a class="dropdown-item" href="/?month=04">4月</a>
+                        <a class="dropdown-item" href="/?month=05">5月</a>
+                        <a class="dropdown-item" href="/?month=06">6月</a>
+                        <a class="dropdown-item" href="/?month=07">7月</a>
+                        <a class="dropdown-item" href="/?month=08">8月</a>
+                        <a class="dropdown-item" href="/?month=09">9月</a>
+                        <a class="dropdown-item" href="/?month=10">10月</a>
+                        <a class="dropdown-item" href="/?month=11">11月</a>
+                        <a class="dropdown-item" href="/?month=12">12月</a>
+                    </div>
+                </div>
+            </div>
+
+
+            {{!-- total amount --}}
+            <div class="total-amount col-9  mt-3">
+                <h6>總金額：</h6>
+                <h1 class='d-flex justify-content-center' style="color: orangered;">{{totalAmount}}</h1>
+            </div>
+
+            {{!-- expenses & btns--}}
+            <ul class="list-group col-12  mt-3" style="padding:0%;">
+                {{#each records}}
+                <div class="d-flex">
+
+                    <li class="list-group-item d-flex col-9 mr-3 align-items-center">
+                        <div class="record-main col-auto mr-auto d-flex align-items-center">
+                            <i class="{{this.icon}} fa-lg"></i>
+
+                            <div class="record-content d-flex flex-column ml-2">
+                                <h5>{{this.name}}</h5>
+                                <small>{{this.date}}</small>
+                            </div>
+                            {{#if this.merchant}}
+                            <h6 class="merchant d-flex ml-3 align-items-center" style="border-radius: 100%; font-size: smaller;
+                                    color: white; background-color: #8E8C84; height: 3vw; padding: 0 0.5vw;">
+                                {{this.merchant}}</h6>
+                            {{/if}}
+                        </div>
+                        <h5 class="col-auto">{{this.amount}}</h5>
+                    </li>
+
+                    <div class="button d-flex align-items-center justify-content-around col-3">
+                        <a href="/expenses/{{this._id}}/edit">
+                            <button class="btn btn-primary">edit</button>
+                        </a>
+                        <form class="delete-action" method="POST" action="/expenses/{{this._id}}/delete?_method=DELETE">
+                            <button type="submit" class="btn btn-primary">delete</button>
+                        </form>
+
+                    </div>
+
+                </div>
+                {{/each}}
+            </ul>
+
+            {{!-- create btn --}}
+            <a class="col-3 mt-3" style="margin-left: 29%;" href="/expenses/new">
+                <button type="button" class="btn btn-primary">新增支出</button>
+            </a>
+        </div>
+    </div>
+
+
+</div>

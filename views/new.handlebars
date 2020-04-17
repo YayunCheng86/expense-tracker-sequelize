@@ -1,0 +1,52 @@
+<div class="container mx-auto d-flex flex-column align-items-center">
+    <div class="row" style="width: 50%;">
+
+        <div class="d-flex col-12 mt-4">
+            <h6 class="col-4" style="font-size: smaller;">*必填項目</h6>
+            <h5 class="col-6">請修改你的支出</h3>
+        </div>
+
+    </div>
+
+    <form class='row d-flex flex-column' method="POST" action="/expenses/new" style="width: 50%;">
+        <div class='d-flex col-12 mt-4'>
+            <label for="name" class="col-3">名稱*</label>
+            <input type="text" class="form-control col-7" placeholder="ex.媽媽的生日霄夜" aria-label="name"
+                aria-describedby="basic-addon1" id="name" name="name" required>
+        </div>
+
+        <div class='d-flex col-12 mt-4'>
+            <label for="name" class="col-3">商家</label>
+            <input type="text" class="form-control col-7" placeholder="ex.巷口壽喜燒" aria-label="name"
+                aria-describedby="basic-addon1" id="name" name="merchant">
+        </div>
+
+
+        <div class="form-group d-flex col-12 mt-4">
+            <label for="merchant-input" class="col-3 col-form-label">日期*</label>
+            <input class="form-control col-7" type="date" value="2020-03-13" id="merchant-input" name="date" required>
+        </div>
+
+        <div class="d-flex col-12 mt-2">
+            <label class="col-3">類別*</label>
+            <select class="custom-select col-7" id="inputGroupSelect01" name="category">
+                <option value="daily-necessities">日用品</option>
+                <option value="transportation">交通</option>
+                <option value="entertainment">娛樂</option>
+                <option value="food">食物</option>
+                <option value="others">其他</option>
+            </select>
+        </div>
+
+        <div class='d-flex col-12 mt-4'>
+            <label for="expense" class="col-3 col-form-label">金額*</label>
+            <input type="text" class="form-control col-7" placeholder="$$$" aria-label="Username"
+                aria-describedby="basic-addon1" id="expense" name="amount" required>
+        </div>
+
+        <div class='d-flex col-12 mt-4 justify-content-center'>
+            <button type="submit" class="btn btn-outline-success d-flex col-4 justify-content-center">送出</button>
+        </div>
+
+    </form>
+</div>
