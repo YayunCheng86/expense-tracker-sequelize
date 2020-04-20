@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-// const User = require('../models/user')
+const db = require('../models')
+const User = db.User
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 
@@ -22,8 +23,8 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    // const { name, email, password, password2 } = req.body
-    // let errors = []
+    const { name, email, password, password2 } = req.body
+    let errors = []
 
     // if (!email || !password || !password2) {
     //     errors.push('email與密碼欄位是必填')
@@ -33,37 +34,42 @@ router.post('/register', (req, res) => {
     //     errors.push('密碼輸入不相符')
     // }
 
-    // if (errors.length > 0) {
-    //     res.render('register', { errors, name, email, password, password2 })
-    // } else {
-    //     User.findOne({ email: email }).then(user => {
-    //         if (user) {
-    //             errors.push('此email已註冊過')
-    //             res.render('register', { errors, name, email, password, password2 })
-    //         } else {
-    //             const newUser = new User({
-    //                 name,
-    //                 email,
-    //                 password
-    //             })
+    if (errors.length > 0) {
+        res.render('register', { errors, name, email, password, password2 })
+    } else {
+        User.findOne({ where: { email: email } }).then(user => {
+            if (user) {
+                errors.push('此email已註冊過')
+                res.render('register', { errors, name, email, password, password2 })
+            } else {
+                const newUser = new User({
+                    name,
+                    email,
+                    password
+                })
 
-    //             bcrypt.genSalt(10, (err, salt) => {
-    //                 bcrypt.hash(newUser.password, salt, (err, hash) => {
-    //                     if (err) throw err
-    //                     newUser.password = hash
+                User.create({
+                    name: name,
+                    email: email,
+                    password: password
+                }).then(user => res.redirect('/'))
 
-    //                     newUser
-    //                         .save()
-    //                         .then(user => {
-    //                             res.redirect('/')
-    //                         })
-    //                         .catch(err => console.log(err))
-    //                 })
-    //             })
-    //         }
-    //     })
-    // }
-    res.send('register')
+                // bcrypt.genSalt(10, (err, salt) => {
+                //     bcrypt.hash(newUser.password, salt, (err, hash) => {
+                //         if (err) throw err
+                //         newUser.password = hash
+
+                //         newUser
+                //             .save()
+                //             .then(user => {
+                //                 res.redirect('/')
+                //             })
+                //             .catch(err => console.log(err))
+                //     })
+                // })
+            }
+        })
+    }
 })
 
 router.get('/logout', (req, res) => {
