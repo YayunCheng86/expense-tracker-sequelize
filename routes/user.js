@@ -26,16 +26,16 @@ router.post('/register', (req, res) => {
     const { name, email, password, password2 } = req.body
     let errors = []
 
-    // if (!email || !password || !password2) {
-    //     errors.push('email與密碼欄位是必填')
-    // }
+    if (!email || !password || !password2) {
+        errors.push('email與密碼欄位是必填')
+    }
 
-    // if (password !== password2) {
-    //     errors.push('密碼輸入不相符')
-    // }
+    if (password !== password2) {
+        errors.push('密碼輸入不相符')
+    }
 
     if (errors.length > 0) {
-        res.render('register', { errors, name, email, password, password2 })
+        res.render('register', { name, email, password, password2 })   // 設好message時要加errors
     } else {
         User.findOne({ where: { email: email } }).then(user => {
             if (user) {
@@ -48,12 +48,11 @@ router.post('/register', (req, res) => {
                     password
                 })
 
-                User.create({
-                    name: name,
-                    email: email,
-                    password: password
-                }).then(user => res.redirect('/'))
-
+                newUser
+                .save()
+                .then(user => res.redirect('/'))
+                .catch(err => console.log(err))
+                
                 // bcrypt.genSalt(10, (err, salt) => {
                 //     bcrypt.hash(newUser.password, salt, (err, hash) => {
                 //         if (err) throw err
