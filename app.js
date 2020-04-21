@@ -3,6 +3,8 @@ const app = express()
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const passport = require('passport')
+const session = require('express-session')
 
 // handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -19,9 +21,17 @@ const db = require('./models')
 const Record = db.Record
 const User = db.User
 
-app.get('/', (req, res) => {
-    res.send('Hello World.')
-})
+// session
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+}))
+
+// passport 
+app.use(passport.initialize())
+app.use(passport.session())
+require('./config/passport')(passport)
 
 // routers
 app.use(require('./routes/home'))

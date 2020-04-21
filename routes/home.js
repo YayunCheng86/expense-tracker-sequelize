@@ -48,8 +48,7 @@ router.get('/', (req, res) => {
 
     //         return res.render('index', { records, totalAmount })
     //     })
-    res.send('home')
-
+    res.render('index')
 })
 
 module.exports = router
