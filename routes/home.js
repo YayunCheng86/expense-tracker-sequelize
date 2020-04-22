@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
-// const Record = require('../models/record')
-// const { authenticated } = require('../config/auth')
+const db = require('../models')
+const Record = db.Record
+const { authenticated } = require('../config/auth')
 
-router.get('/', (req, res) => {
-    // Record.find({ userId: req.user._id })
+router.get('/', authenticated, (req, res) => {
+    // Record.findAll({ userId: req.user._id })
     //     .sort({ date: '-1' })
     //     .lean()
     //     .exec((err, records) => {

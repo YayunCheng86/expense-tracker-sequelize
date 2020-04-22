@@ -1,20 +1,20 @@
 const express = require('express')
 const router = express.Router()
 // const Record = require('../models/record')
-// const { authenticated } = require('../config/auth')
+const { authenticated } = require('../config/auth')
 
 // read all expenses page
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
     res.redirect('/')
 })
 
 // read the new page
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
     res.render('new')
 })
 
 // post a new record
-router.post('/new', (req, res) => {
+router.post('/new', authenticated, (req, res) => {
 //     const { name, date, category, amount, merchant } = req.body
 //     const userId = req.user._id
 
@@ -37,7 +37,7 @@ router.post('/new', (req, res) => {
 // })
 
 // // read the edit page
-// router.get('/:id/edit', (req, res) => {
+// router.get('/:id/edit', authenticated, (req, res) => {
 //     Record.findOne({ _id: req.params.id, userId: req.user._id })
 //         .lean()
 //         .exec((err, record) => {
@@ -56,7 +56,7 @@ router.post('/new', (req, res) => {
 })
 
 // edit an expense
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', authenticated, (req, res) => {
     // console.log(req.params.id)
     // const { name, date, category, amount } = req.body
     // Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
@@ -73,7 +73,7 @@ router.put('/:id/edit', (req, res) => {
 })
 
 // delete an expense
-router.delete('/:id/delete', (req, res) => {
+router.delete('/:id/delete', authenticated, (req, res) => {
     // Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     //     if (err) return console.log(err)
     //     record.remove(err => {
