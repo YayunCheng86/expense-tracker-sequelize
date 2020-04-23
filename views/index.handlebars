@@ -69,10 +69,10 @@
                     </li>
 
                     <div class="button d-flex align-items-center justify-content-around col-3">
-                        <a href="/expenses/{{this._id}}/edit">
+                        <a href="/expenses/{{this.id}}/edit">
                             <button class="btn btn-primary">edit</button>
                         </a>
-                        <form class="delete-action" method="POST" action="/expenses/{{this._id}}/delete?_method=DELETE">
+                        <form class="delete-action" method="POST" action="/expenses/{{this.id}}/delete?_method=DELETE">
                             <button type="submit" class="btn btn-primary">delete</button>
                         </form>
 

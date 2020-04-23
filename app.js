@@ -35,8 +35,13 @@ require('./config/passport')(passport)
 
 // routers
 app.use(require('./routes/home'))
-app.use('/records', require('./routes/record'))
+app.use('/expenses', require('./routes/record'))
 app.use('/users', require('./routes/user'))
+
+app.use((req, res,next) => {
+    app.locals.user = req.user
+    app.locals.isAuthenticated = req.isAuthenticated()
+})
 
 app.listen(3000, () => {
     console.log('App is listening.')

@@ -6,7 +6,7 @@ const User = db.User
 const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
-    res.render('login')
+    return res.render('login')
 })
 
 router.post('/login', (req, res, next) => {
@@ -17,7 +17,7 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/register', (req, res) => {
-    res.render('register')
+    return res.render('register')
 })
 
 router.post('/register', (req, res) => {
@@ -70,10 +70,9 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-    // req.logout()
+    req.logout()
     // req.flash('success_msg', '你已成功登出')
-    // res.redirect('/users/login')
-    res.send('login')
+    return res.redirect('/users/login')
 })
 
 module.exports = router

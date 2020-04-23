@@ -1,88 +1,98 @@
 const express = require('express')
 const router = express.Router()
-// const Record = require('../models/record')
+const db = require('../models')
+const Record = db.Record
+const User = db.User
 const { authenticated } = require('../config/auth')
 
 // read all expenses page
 router.get('/', authenticated, (req, res) => {
-    res.redirect('/')
+    return res.redirect('/')
 })
 
 // read the new page
 router.get('/new', authenticated, (req, res) => {
-    res.render('new')
+    return res.render('new')
 })
 
 // post a new record
 router.post('/new', authenticated, (req, res) => {
-//     const { name, date, category, amount, merchant } = req.body
-//     const userId = req.user._id
+    const { name, date, category, amount } = req.body
+    const UserId = req.user.id
 
+    const record = new Record({
+        name,
+        date,
+        category,
+        amount,
+        UserId
+    })
 
+    record.save()
+    .then(user => { return res.redirect('/') })
+    .catch((error) => { return res.status(422).json(error) })
+})
 
-//     const record = new Record({
-//         name,
-//         date,
-//         category,
-//         amount,
-//         userId,
-//         merchant
-//     })
-
-
-//     record.save((err) => {
-//         if (err) return console.error(err)
-//         return res.redirect('/')
-//     })
-// })
-
-// // read the edit page
-// router.get('/:id/edit', authenticated, (req, res) => {
-//     Record.findOne({ _id: req.params.id, userId: req.user._id })
-//         .lean()
-//         .exec((err, record) => {
-//             if (err) return console.log(err)
-
-//             // remain select option
-//             const categories = ['daily-necessities', 'transportation', 'entertainment', 'food', 'others']
-//             categories.forEach(category => {
-//                 if (record.category === category) {
-//                     record[`select${category}`] = true
-//                 }
-//             })
-
-//             return res.render('edit', { record })
-//         })
+// read the edit page
+router.get('/:id/edit', authenticated, (req, res) => {
+    User.findByPk(req.user.id)
+    .then(user => {
+        if(!user) throw new Error('user not found')
+        return Record.findOne({
+            where: {
+                id: req.params.id,
+                UserId: req.user.id
+            }
+        })
+    })
+    .then(record => {
+        // remain select option
+        const categories = ['daily-necessities', 'transportation', 'entertainment', 'food', 'others']
+        categories.forEach(category => {
+            if (record.category === category) {
+                record[`select${category}`] = true
+            }
+        })
+        return res.render('edit', { record: record.get() })
+    })
+    .catch((error) => { return res.status(422).json(error) })
 })
 
 // edit an expense
 router.put('/:id/edit', authenticated, (req, res) => {
-    // console.log(req.params.id)
-    // const { name, date, category, amount } = req.body
-    // Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
-    //     if (err) return console.error(err)
-    //     record.name = name
-    //     record.date = date
-    //     record.category = category
-    //     record.amount = amount
-    //     record.save(err => {
-    //         if (err) return console.error(err)
-    //         res.redirect('/')
-    //     })
-    // })
+    const { name, date, category, amount } = req.body
+    Record.findOne({ 
+        where: { 
+            id: req.params.id, 
+            UserId: req.user.id 
+        }
+    })
+    .then(record => {
+        record.name = name
+        record.date = date
+        record.category = category
+        record.amount = amount
+        return record.save()
+    })       
+    .then(record => { return res.redirect('/') })
+    .catch((error) => { return res.status(422).json(error) })
 })
 
 // delete an expense
 router.delete('/:id/delete', authenticated, (req, res) => {
-    // Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
-    //     if (err) return console.log(err)
-    //     record.remove(err => {
-    //         if (err) return console.log(err)
-    //         res.redirect('/')
-    //     })
-    // })
+    User.findByPk(req.user.id)
+    .then(user => {
+        if(!user) throw new Error ('user not found')
+        return Record.destroy({ 
+            where: { 
+                id: req.params.id, 
+                UserId: req.user.id 
+            } 
+        })
+    })
+    .then(record => { return res.redirect('/') })
+    .catch((error) => { return res.status(422).json(error) })    
 })
-
 
 module.exports = router
 
