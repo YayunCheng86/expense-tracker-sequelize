@@ -6,6 +6,10 @@ const methodOverride = require('method-override')
 const passport = require('passport')
 const session = require('express-session')
 
+if(process.env.NODE_ENV !== 'production') { 
+    require('dotenv').config()
+}
+
 // handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -37,6 +41,7 @@ require('./config/passport')(passport)
 app.use(require('./routes/home'))
 app.use('/expenses', require('./routes/record'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 app.use((req, res,next) => {
     app.locals.user = req.user
