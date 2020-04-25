@@ -13,6 +13,7 @@ router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/users/login',
+        failureFlash: req.flash('warning_msg', '帳號或密碼錯誤')
     })(req, res, next)
 })
 
@@ -33,7 +34,8 @@ router.post('/register', (req, res) => {
     }
 
     if (errors.length > 0) {
-        res.render('register', { name, email, password, password2 })   // 設好message時要加errors
+        console.log(errors)
+        return res.render('register', { errors, name, email, password, password2 })   // 設好message時要加errors
     } else {
         User.findOne({ where: { email: email } }).then(user => {
             if (user) {
@@ -64,7 +66,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.logout()
-    // req.flash('success_msg', '你已成功登出')
+    req.flash('success_msg', '你已成功登出')
     return res.redirect('/users/login')
 })
 
