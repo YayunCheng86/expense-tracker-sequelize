@@ -11,16 +11,14 @@
 
         <div class='d-flex col-12 mt-4'>
             <label for="name" class="col-3">名稱*</label>
-            <input type="text" class="form-control col-7" placeholder="ex.媽媽的生日禮物" aria-label="name"
-                aria-describedby="basic-addon1" id="name" name="name" required
+            <input type="text" class="form-control col-7" placeholder="ex.媽媽的生日禮物" id="name" name="name" required
                 value="{{#if record }} {{record.name}} {{/if}}">
         </div>
 
         <div class='d-flex col-12 mt-4'>
             <label for="name" class="col-3">商家</label>
-            <input type="text" class="form-control col-7" placeholder="ex.巷口壽喜燒" aria-label="name"
-                aria-describedby="basic-addon1" id="name" name="merchant" value={{#if record }} {{record.merchant}}
-                {{/if}}>
+            <input type="text" class="form-control col-7" placeholder="ex.巷口壽喜燒" id="name" name="merchant" 
+                value={{#if record }} {{record.merchant}} {{/if}}>
         </div>
 
         <div class="form-group d-flex col-12 mt-4">
@@ -43,9 +41,8 @@
 
         <div class='d-flex col-12 mt-4'>
             <label for="expense" class="col-3 col-form-label">金額*</label>
-            <input type="text" class="form-control col-7" placeholder="$$$" aria-label="Username"
-                aria-describedby="basic-addon1" id="expense" name="amount" required
-                value="{{#if record }} {{record.amount}} {{/if}}">
+            <input type='number' class="form-control col-7" placeholder="$$$" id="expense" name="amount" required
+                value={{#if record }} {{record.amount}} {{/if}}>
         </div>
 
         <div class='d-flex col-12 mt-4 justify-content-center'>

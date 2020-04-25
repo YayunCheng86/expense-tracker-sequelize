@@ -11,14 +11,12 @@
     <form class='row d-flex flex-column' method="POST" action="/expenses/new" style="width: 50%;">
         <div class='d-flex col-12 mt-4'>
             <label for="name" class="col-3">名稱*</label>
-            <input type="text" class="form-control col-7" placeholder="ex.媽媽的生日霄夜" aria-label="name"
-                aria-describedby="basic-addon1" id="name" name="name" required>
+            <input type="text" class="form-control col-7" placeholder="ex.媽媽的生日霄夜" id="name" name="name" required>
         </div>
 
         <div class='d-flex col-12 mt-4'>
             <label for="name" class="col-3">商家</label>
-            <input type="text" class="form-control col-7" placeholder="ex.巷口壽喜燒" aria-label="name"
-                aria-describedby="basic-addon1" id="name" name="merchant">
+            <input type="text" class="form-control col-7" placeholder="ex.巷口壽喜燒" id="name" name="merchant">
         </div>
 
 
@@ -40,8 +38,7 @@
 
         <div class='d-flex col-12 mt-4'>
             <label for="expense" class="col-3 col-form-label">金額*</label>
-            <input type="text" class="form-control col-7" placeholder="$$$" aria-label="Username"
-                aria-describedby="basic-addon1" id="expense" name="amount" required>
+            <input type="number" class="form-control col-7" placeholder="$$$"  id="expense" name="amount" required>
         </div>
 
         <div class='d-flex col-12 mt-4 justify-content-center'>

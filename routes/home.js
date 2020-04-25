@@ -75,7 +75,10 @@ router.get('/', authenticated, (req, res) => {
 
         return res.render('index', { records, totalAmount })
     })
-    .catch(err => { return console.error(err) })
+        .catch(err => {
+            return res.status(404)
+            .send('無效的網址，重新輸入 localhost:3000/')
+        })
 })
 
 module.exports = router

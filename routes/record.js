@@ -39,6 +39,8 @@ router.get('/:id/edit', authenticated, (req, res) => {
     .then(user => {
         if(!user) throw new Error('user not found')
         return Record.findOne({
+            raw: true,
+            nest: true,
             where: {
                 id: req.params.id,
                 UserId: req.user.id
@@ -53,7 +55,9 @@ router.get('/:id/edit', authenticated, (req, res) => {
                 record[`select${category}`] = true
             }
         })
-        return res.render('edit', { record: record.get() })
+
+        console.log(typeof(record.amount))
+        return res.render('edit', { record })
     })
     .catch((error) => { return res.status(422).json(error) })
 })

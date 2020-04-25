@@ -15,6 +15,9 @@ if(process.env.NODE_ENV !== 'production') {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+// static file
+app.use(express.static('public'))
+
 // body parser
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -54,6 +57,14 @@ app.use(require('./routes/home'))
 app.use('/expenses', require('./routes/record'))
 app.use('/users', require('./routes/user'))
 app.use('/auth', require('./routes/auths'))
+
+// 輸入無效網址時處理錯誤
+app.use((req, res) => {
+    if (res.headersSent) {
+       return next()
+    }
+    return res.status(404).send('無效的網址，重新輸入 localhost:3000/')   
+})
 
 app.listen(3000, () => {
     console.log('App is listening.')
