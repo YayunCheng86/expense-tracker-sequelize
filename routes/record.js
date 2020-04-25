@@ -17,11 +17,12 @@ router.get('/new', authenticated, (req, res) => {
 
 // post a new record
 router.post('/new', authenticated, (req, res) => {
-    const { name, date, category, amount } = req.body
+    const { name, date, category, amount, merchant } = req.body
     const UserId = req.user.id
 
     const record = new Record({
         name,
+        merchant,
         date,
         category,
         amount,
@@ -30,7 +31,7 @@ router.post('/new', authenticated, (req, res) => {
 
     record.save()
     .then(user => { return res.redirect('/') })
-    .catch((error) => { return res.status(422).json(error) })
+    .catch((error) => { return res.status(422).send('錯誤！請回上一頁或輸入localhost:3000/回到首頁') })
 })
 
 // read the edit page
@@ -56,15 +57,14 @@ router.get('/:id/edit', authenticated, (req, res) => {
             }
         })
 
-        console.log(typeof(record.amount))
         return res.render('edit', { record })
     })
-    .catch((error) => { return res.status(422).json(error) })
+    .catch((error) => { return res.status(422).send('錯誤！請回上一頁或輸入localhost:3000/回到首頁') })
 })
 
 // edit an expense
 router.put('/:id/edit', authenticated, (req, res) => {
-    const { name, date, category, amount } = req.body
+    const { name, date, category, amount, merchant } = req.body
     Record.findOne({ 
         where: { 
             id: req.params.id, 
@@ -76,10 +76,11 @@ router.put('/:id/edit', authenticated, (req, res) => {
         record.date = date
         record.category = category
         record.amount = amount
+        record.merchant = merchant
         return record.save()
     })       
     .then(record => { return res.redirect('/') })
-    .catch((error) => { return res.status(422).json(error) })
+    .catch((error) => { return res.status(422).send('錯誤！請回上一頁或輸入localhost:3000/回到首頁') })
 })
 
 // delete an expense
@@ -95,7 +96,7 @@ router.delete('/:id/delete', authenticated, (req, res) => {
         })
     })
     .then(record => { return res.redirect('/') })
-    .catch((error) => { return res.status(422).json(error) })    
+    .catch((error) => { return res.status(422).send('錯誤！請回上一頁或輸入localhost:3000/回到首頁') })    
 })
 
 module.exports = router

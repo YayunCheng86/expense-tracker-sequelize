@@ -4,11 +4,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     category: DataTypes.STRING,
     date: DataTypes.STRING,
-    amount: DataTypes.INTEGER
+    amount: DataTypes.INTEGER,
+    merchant: DataTypes.STRING
   }, {});
+
   Record.associate = function(models) {
-    // associations can be defined here
     Record.belongsTo(models.User)
-  };
+  }
+  
   return Record;
 };

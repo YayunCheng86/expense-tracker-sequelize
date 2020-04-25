@@ -15,11 +15,18 @@
             <a class="nav-link active" href="/">老爸的私房錢</a>
         </li>
 
-        {{#if isAuthenticated}}
-        <a href="/users/logout" class="btn btn-outline-light d-flex align-items-center mr-2">Logout</a>
-        {{else}}
-        <a href="/users/login" class="btn btn-outline-light d-flex align-items-center mr-2">Login</a>
-        {{/if}}
+        <div class="user-panel d-flex align-items-center">   
+            {{#if isAuthenticated}}
+            <i class="far fa-user mr-1"></i>
+            <p class="align-items-center mr-2" style="max-height:3px;">{{#if user.name}} Hi！{{user.name}} {{else}} Hi！anonymous {{/if}}</p>
+            <a href="/users/logout" class="btn btn-outline-light d-flex align-items-center mr-2">Logout</a>
+            {{else}}
+            <i class="far fa-user mr-1"></i>
+            <p class="align-items-center mr-2" style="max-height: 3px;">Hi there!</p>
+            <a href="/users/login" class="btn btn-outline-light d-flex align-items-center mr-2">Login</a>
+            {{/if}}
+        </div>
+        
     </ul>
 </header>
 
